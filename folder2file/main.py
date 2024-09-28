@@ -1,4 +1,4 @@
-from folder2file import process_folder, format_json, format_markdown
+from folder2file import process_folder, format_json, format_markdown, format_text
 from .cli import config_from_cli
 
 
@@ -23,5 +23,7 @@ def format_output(data, config):
         return format_json(data, config.no_newline)
     elif config.output_format == "markdown":
         return format_markdown(data, config.no_newline)
+    elif config.output_format == "text":
+        return format_text(data)
     else:
         raise ValueError(f"Unsupported output format: {config.output_format}")

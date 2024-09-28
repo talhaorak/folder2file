@@ -27,6 +27,9 @@ def process_file(file_name, file_path, config):
     if is_binary(file_path) and config.skip_binaries:
         return {file_name: None}
 
+    if config.skip_content:
+        return {file_name: None}
+
     try:
         with open(file_path, 'rb') as file:
             content = file.read()
