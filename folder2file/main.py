@@ -4,7 +4,11 @@ from .cli import config_from_cli
 
 def main():
     config = config_from_cli()
-    folder_structure = process_folder(config)
+
+    print("Processing folder: ", config.folder_path)
+    folder_structure = process_folder(config).result
+
+    print("Writing output: ", config.out_filename)
     formatted_output = format_output(folder_structure, config)
     if config.print_output:
         print(formatted_output)

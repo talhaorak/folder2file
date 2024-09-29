@@ -4,14 +4,17 @@ from .out_md import format_markdown
 from .out_text import format_text
 from dataclasses import dataclass
 
+__version__ = "0.3.4"
+
 
 @dataclass
 class Config:
-    folder_path: str
-    output_format: str
+    folder_path: str = "."
+    output_format: str = "json"
     no_newline: bool = False
-    skip_binaries: bool = False
+    skip_binaries: bool = True
     skip_content: bool = False
     include_hidden: bool = False
+    no_gitignore: bool = False
     print_output: bool = False
     out_filename: str = None

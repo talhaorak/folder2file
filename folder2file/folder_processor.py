@@ -1,44 +1,66 @@
 import os
 import base64
+# import fnmatch
+from gitignore_parser import parse_gitignore
 
 
-def process_folder(config, path=None):
-    if path is None:
-        path = config.folder_path
+class process_folder:
+    def __init__(self, config):
+        self.config = config
+        self.gitignore_patterns = []
+        self.result = {}
 
-    result = {}
-    folder_name = os.path.basename(path)
-    result[folder_name] = []
+        if not config.no_gitignore:
+            self.gitignore_matches = parse_gitignore(
+                os.path.join(config.folder_path, '.gitignore'))
 
-    for item in os.listdir(path):
-        if not config.include_hidden and item.startswith('.'):
-            continue
+        folder_name = os.path.basename(config.folder_path)
+        if folder_name == '.':
+            folder_name = os.path.basename(os.path.abspath(config.folder_path))
+        self.result[folder_name] = self.process_folder(config.folder_path)
 
-        item_path = os.path.join(path, item)
-        if os.path.isfile(item_path):
-            result[folder_name].append(process_file(item, item_path, config))
-        elif os.path.isdir(item_path):
-            result[folder_name].append(process_folder(config, item_path))
+    def process_folder(self, folder_path):
+        result = []
 
-    return result
+        for item in os.listdir(folder_path):
+            item_path = os.path.join(folder_path, item)
+            item_name = item
+            if os.path.isdir(item_path):
+                item_name += '/'
+            if not self.config.include_hidden and item.startswith('.'):
+                continue
 
+            if not self.config.no_gitignore and self.gitignore_matches(item_path):
+                continue
 
-def process_file(file_name, file_path, config):
-    if is_binary(file_path) and config.skip_binaries:
-        return {file_name: None}
+            if os.path.isfile(item_path):
+                result.append(
+                    self.process_file(item, item_path))
+            elif os.path.isdir(item_path):
+                item_name = os.path.basename(item_path)
+                result.append({
+                    item_name:
+                    self.process_folder(item_path)
+                })
 
-    if config.skip_content:
-        return {file_name: None}
+        return result
 
-    try:
-        with open(file_path, 'rb') as file:
-            content = file.read()
-            if is_binary(file_path):
-                return {file_name: base64.b64encode(content).decode('utf-8')}
-            else:
-                return {file_name: content.decode('utf-8')}
-    except Exception as e:
-        return {file_name: f"Error reading file: {str(e)}"}
+    def process_file(self, file_name, file_path):
+        if is_binary(file_path) and self.config.skip_binaries:
+            return {file_name: None}
+
+        if self.config.skip_content:
+            return {file_name: None}
+
+        try:
+            with open(file_path, 'rb') as file:
+                content = file.read()
+                if is_binary(file_path):
+                    return {file_name: base64.b64encode(content).decode('utf-8')}
+                else:
+                    return {file_name: content.decode('utf-8')}
+        except Exception as e:
+            return {file_name: f"Error reading file: {str(e)}"}
 
 
 def is_binary(file_path):
@@ -51,3 +73,22 @@ def is_binary(file_path):
             return False
     except:
         return True
+
+
+# def read_gitignore(path):
+#     gitignore_path = os.path.join(path, '.gitignore')
+#     if not os.path.exists(gitignore_path):
+#         print(f"Warning: No .gitignore file found in {path}")
+#         return []
+
+#     with open(gitignore_path, 'r') as f:
+#         patterns = [line.strip() for line in f if line.strip()
+#                     and not line.startswith('#')]
+#     return patterns
+
+
+# def matches_gitignore(item_path, patterns):
+#     for pattern in patterns:
+#         if fnmatch.fnmatch(item_path, pattern):
+#             return True
+#     return False

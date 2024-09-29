@@ -4,8 +4,12 @@ This Python-based tool converts a folder structure into either JSON or Markdown 
 
 ## Features
 
-- Convert folder structures to JSON or Markdown format
+- Convert folder structures to JSON, Markdown or text format
 - Option to remove unnecessary newlines from file contents
+- Option to skip binary files' content
+- Option to skip file contents entirely
+- Option to include hidden files and folders
+- Option to use rules from a .gitignore file
 
 ### Local Installation
 
@@ -40,17 +44,19 @@ folder2file <folder_path> <output_format> [options]
 
 ### Arguments:
 
-- `<folder_path>`: Path to the folder you want to convert
-- `<output_format>`: Choose between `json`, `markdown` or `text`
+- `<folder_path>`: Path to the folder you want to convert (default: current directory)
+- `<output_format>`: Choose between `json`, `markdown` or `text` (default: `json`)
 
 ### Options:
 
 - `--no-newline`: Remove unnecessary newlines from file contents
 - `--skip-binaries`: Don't include binary files' content, only their names
-- `--skip-content`: Don't include file contents in the output
+- `--skip-content`: Don't include file contents in the output (default: False)
 - `--include-hidden`: Include hidden files and folders (default: False)
+- `--no-gitignore`: Don't use rules from a .gitignore file (default: False)
 - `--print`: Print the generated content to the console (default: False)
 - `--out FILENAME`: Specify the output filename (default: name of the processed folder)
+- `--version`: Show the version number and exit
 
 ### Examples:
 
