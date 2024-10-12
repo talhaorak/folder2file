@@ -10,9 +10,11 @@ class process_folder:
         self.gitignore_patterns = []
         self.result = {}
 
-        if not config.no_gitignore:
-            self.gitignore_matches = parse_gitignore(
-                os.path.join(config.folder_path, '.gitignore'))
+        gitignore_path = os.path.join(config.folder_path, '.gitignore')
+        if not config.no_gitignore and os.path.exists(gitignore_path):
+            self.gitignore_matches = parse_gitignore(gitignore_path)
+        else:
+            self.gitignore_matches = lambda x: False
 
         folder_name = os.path.basename(config.folder_path)
         if folder_name == '.':
@@ -73,22 +75,3 @@ def is_binary(file_path):
             return False
     except:
         return True
-
-
-# def read_gitignore(path):
-#     gitignore_path = os.path.join(path, '.gitignore')
-#     if not os.path.exists(gitignore_path):
-#         print(f"Warning: No .gitignore file found in {path}")
-#         return []
-
-#     with open(gitignore_path, 'r') as f:
-#         patterns = [line.strip() for line in f if line.strip()
-#                     and not line.startswith('#')]
-#     return patterns
-
-
-# def matches_gitignore(item_path, patterns):
-#     for pattern in patterns:
-#         if fnmatch.fnmatch(item_path, pattern):
-#             return True
-#     return False

@@ -4,7 +4,7 @@ from .out_md import format_markdown
 from .out_text import format_text
 from dataclasses import dataclass
 
-__version__ = "0.3.4"
+__version__ = "0.3.5"
 
 
 @dataclass
