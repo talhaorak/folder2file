@@ -3,6 +3,7 @@ from .out_json import format_json
 from .out_md import format_markdown
 from .out_text import format_text
 from dataclasses import dataclass
+from typing import Optional
 
 __version__ = "0.3.6"
 
@@ -17,4 +18,4 @@ class Config:
     include_hidden: bool = False
     no_gitignore: bool = False
     print_output: bool = False
-    out_filename: str = None
+    out_filename: Optional[str] = None

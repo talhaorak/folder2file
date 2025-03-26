@@ -1,11 +1,17 @@
 import argparse
 import os
 import sys
-
+from typing import Optional
 from folder2file import Config, __version__
 
 
-def config_from_cli():
+def config_from_cli() -> Config:
+    """
+    Parse command line arguments and create a Config object.
+
+    Returns:
+        Config object with settings from command line arguments
+    """
     parser = argparse.ArgumentParser(
         description="Convert folder structure to JSON or Markdown")
     parser.add_argument("folder_path", nargs='?', default=".",
@@ -29,12 +35,12 @@ def config_from_cli():
     parser.add_argument("--version", action="store_true",
                         help="Print version information")
 
-    args = parser.parse_args()
+    args: argparse.Namespace = parser.parse_args()
     if args.version:
         print(f"folder2file version {__version__}")
         sys.exit(0)
 
-    out_filename = args.out
+    out_filename: Optional[str] = args.out
     if out_filename is None:
         if args.folder_path == '.':
             out_filename = os.path.basename(os.path.abspath(args.folder_path))
@@ -48,7 +54,7 @@ def config_from_cli():
     elif args.output_format == 'text' and not out_filename.endswith('.txt'):
         out_filename += '.txt'
 
-    config = Config(
+    config: Config = Config(
         folder_path=args.folder_path,
         output_format=args.output_format,
         no_newline=args.no_newline,
