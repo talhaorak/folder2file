@@ -7,6 +7,7 @@ from .folder_processor import process_folder
 from .out_json import format_json
 from .out_md import format_markdown
 from .out_text import format_text
+from .out_xml import format_xml
 from .cli import config_from_cli
 
 
@@ -50,6 +51,8 @@ def format_output(data: Dict[str, Any], config: Config) -> str:
         return format_markdown(data, config.no_newline)
     elif config.output_format == "text":
         return format_text(data)
+    elif config.output_format == "xml":
+        return format_xml(data, config.no_newline)
     else:
         raise ValueError(f"Unsupported output format: {config.output_format}")
 

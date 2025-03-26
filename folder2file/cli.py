@@ -16,12 +16,12 @@ def config_from_cli() -> Config:
         Config object with settings from command line arguments
     """
     parser = argparse.ArgumentParser(
-        description="Convert folder structure to JSON or Markdown")
+        description="Convert folder structure to JSON, Markdown, XML, or text")
     parser.add_argument("folder_path", nargs='?', default=".",
                         help="Path to the folder to process")
     parser.add_argument("output_format", nargs='?', default="json",
-                        choices=["json", "markdown", "text"],
-                        help="Output format (json, markdown or text)")
+                        choices=["json", "markdown", "text", "xml"],
+                        help="Output format (json, markdown, text, or xml)")
     parser.add_argument("--no-newline", action="store_true", default=False,
                         help="Remove unnecessary newlines")
     parser.add_argument("--skip-binaries", action="store_true", default=True,
@@ -56,6 +56,8 @@ def config_from_cli() -> Config:
         out_filename += '.md'
     elif args.output_format == 'text' and not out_filename.endswith('.txt'):
         out_filename += '.txt'
+    elif args.output_format == 'xml' and not out_filename.endswith('.xml'):
+        out_filename += '.xml'
 
     config: Config = Config(
         folder_path=args.folder_path,

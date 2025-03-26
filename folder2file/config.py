@@ -4,7 +4,7 @@ Configuration module for folder2file.
 from dataclasses import dataclass
 from typing import Optional
 
-__version__ = "0.3.6"
+__version__ = "0.4.0"
 
 
 @dataclass
