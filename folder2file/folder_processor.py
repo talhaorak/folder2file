@@ -1,7 +1,7 @@
 import os
 import base64
 # import fnmatch
-from gitignore_parser import parse_gitignore
+from .gitignore_parser import parse_gitignore
 
 
 class process_folder:

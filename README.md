@@ -89,5 +89,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Implement file content filtering options
 - Add option to limit recursion depth
 
+## Acknowledgments
+
+- Thanks to [Michael Herrmann](https://github.com/mherrmann) for the [gitignore_parser](https://github.com/mherrmann/gitignore_parser) library which is used to handle .gitignore rules.
 
 If you have any suggestions or encounter any issues, please open an issue on the GitHub repository.
