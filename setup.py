@@ -12,7 +12,7 @@ setup(
     },
     author="Talha Orak",
     author_email="talhaorak.git@gmail.com",
-    description="A tool to convert folder structures to JSON or Markdown",
+    description="A tool to convert folder structures to JSON, Markdown, XML or text",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/talhaorak/folder2file",
@@ -21,6 +21,9 @@ setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
+    ],
+    install_requires=[
+        "questionary>=1.10.0",
     ],
     python_requires=">=3.6",
 )

@@ -1,6 +1,7 @@
 """
 Main module for the folder2file application.
 """
+import sys
 from typing import Dict, Any
 from .config import Config
 from .folder_processor import process_folder
@@ -9,6 +10,7 @@ from .out_md import format_markdown
 from .out_text import format_text
 from .out_xml import format_xml
 from .cli import config_from_cli
+from .cli_menu import run_interactive_menu
 
 
 def main() -> None:
@@ -16,12 +18,18 @@ def main() -> None:
     Main entry point for the folder2file application.
     Processes a folder structure and outputs it in the specified format.
     """
-    config: Config = config_from_cli()
+    # Check if any command line arguments were provided
+    if len(sys.argv) == 1:
+        # No arguments provided, use interactive CLI menu
+        config: Config = run_interactive_menu()
+    else:
+        # Arguments provided, use traditional CLI parsing
+        config: Config = config_from_cli()
 
-    print("Processing folder: ", config.folder_path)
+    print(f"Processing folder: {config.folder_path}")
     folder_structure: Dict[str, Any] = process_folder(config).result
 
-    print("Writing output: ", config.out_filename)
+    print(f"Writing output: {config.out_filename}")
     formatted_output: str = format_output(folder_structure, config)
     if config.print_output:
         print(formatted_output)
@@ -29,6 +37,8 @@ def main() -> None:
     if config.out_filename:
         with open(config.out_filename, "w", encoding="utf-8") as f:
             f.write(formatted_output)
+
+    print(f"✅ Conversion completed successfully!")
 
 
 def format_output(data: Dict[str, Any], config: Config) -> str:

@@ -5,6 +5,7 @@ This Python-based tool converts a folder structure into JSON, Markdown, XML, or 
 ## Features
 
 - Convert folder structures to JSON, Markdown, XML, or text format
+- Interactive CLI menu for easy configuration
 - Option to remove unnecessary newlines from file contents
 - Option to skip binary files' content
 - Option to skip file contents entirely
@@ -36,18 +37,37 @@ To install the Folder Structure Converter as a system-wide application:
 
 ## Usage
 
-After installation, you can run the tool from anywhere in your system using:
+After installation, you can run the tool in two ways:
+
+### Interactive Mode
+
+Simply run the command without any arguments to start the interactive CLI menu:
+
+```
+folder2file
+```
+
+This will guide you through a series of prompts to:
+- Select the input folder path
+- Choose the output filename
+- Select the output format using arrow keys
+- Toggle various options with checkboxes
+- Confirm your settings before processing
+
+### Command Line Mode
+
+If you prefer, you can also specify all options directly on the command line:
 
 ```
 folder2file <folder_path> <output_format> [options]
 ```
 
-### Arguments:
+#### Arguments:
 
 - `<folder_path>`: Path to the folder you want to convert (default: current directory)
 - `<output_format>`: Choose between `json`, `markdown`, `text`, or `xml` (default: `json`)
 
-### Options:
+#### Options:
 
 - `--no-newline`: Remove unnecessary newlines from file contents
 - `--skip-binaries`: Don't include binary files' content, only their names
@@ -108,6 +128,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Implement file content filtering options
 - Add option to limit recursion depth
 - Add progress indicators for large directories
+- Improve XML output with attribute options
 
 ## Acknowledgments
 
