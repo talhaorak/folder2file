@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-from folder2file import __version__
+from folder2file.config import __version__
 
 setup(
     name="folder2file",

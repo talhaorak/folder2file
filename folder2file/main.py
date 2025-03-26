@@ -1,7 +1,13 @@
-from folder2file import process_folder, format_json, format_markdown, format_text
+"""
+Main module for the folder2file application.
+"""
+from typing import Dict, Any
+from .config import Config
+from .folder_processor import process_folder
+from .out_json import format_json
+from .out_md import format_markdown
+from .out_text import format_text
 from .cli import config_from_cli
-from typing import Dict, Any, Union
-from folder2file import Config
 
 
 def main() -> None:
@@ -22,10 +28,6 @@ def main() -> None:
     if config.out_filename:
         with open(config.out_filename, "w", encoding="utf-8") as f:
             f.write(formatted_output)
-
-
-if __name__ == "__main__":
-    main()
 
 
 def format_output(data: Dict[str, Any], config: Config) -> str:
@@ -50,3 +52,7 @@ def format_output(data: Dict[str, Any], config: Config) -> str:
         return format_text(data)
     else:
         raise ValueError(f"Unsupported output format: {config.output_format}")
+
+
+if __name__ == "__main__":
+    main()

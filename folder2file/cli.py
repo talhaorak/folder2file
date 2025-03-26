@@ -1,8 +1,11 @@
+"""
+Command-line interface module for folder2file.
+"""
 import argparse
 import os
 import sys
 from typing import Optional
-from folder2file import Config, __version__
+from .config import Config, __version__
 
 
 def config_from_cli() -> Config:

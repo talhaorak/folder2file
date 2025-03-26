@@ -1,8 +1,11 @@
+"""
+Module for processing folder structures into dictionary representations.
+"""
 import os
 import base64
 from typing import Dict, List, Any, Callable, Union, Optional
 from .gitignore_parser import parse_gitignore
-from folder2file import Config
+from .config import Config
 
 
 class process_folder:

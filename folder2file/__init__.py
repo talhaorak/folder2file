@@ -1,21 +1,22 @@
-from .folder_processor import process_folder
+"""
+folder2file package for converting folder structures to various formats.
+"""
+# First, import version and Config from config
+from .config import __version__, Config
+
+# Then import everything else
 from .out_json import format_json
 from .out_md import format_markdown
 from .out_text import format_text
-from dataclasses import dataclass
-from typing import Optional
 
-__version__ = "0.3.6"
+# Import process_folder last to avoid circular dependencies
+from .folder_processor import process_folder
 
-
-@dataclass
-class Config:
-    folder_path: str = "."
-    output_format: str = "json"
-    no_newline: bool = False
-    skip_binaries: bool = True
-    skip_content: bool = False
-    include_hidden: bool = False
-    no_gitignore: bool = False
-    print_output: bool = False
-    out_filename: Optional[str] = None
+__all__ = [
+    'Config',
+    'process_folder',
+    'format_json',
+    'format_markdown',
+    'format_text',
+    '__version__',
+]
